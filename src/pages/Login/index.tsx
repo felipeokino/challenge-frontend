@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from '../../components/Button/button';
 import Input from "../../components/Input/input";
 import useAuthentication from "../../hooks/useAuthentication";
 import { validateEmail } from "../../utils/string";
@@ -68,9 +69,9 @@ const Login = () => {
             error={errors.password}
             helperText="At least 8 characters"
           />
-          <button
+          <Button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 ml-auto rounded transition-all w-1/3 max-sm:w-full flex justify-center items-center gap-2"
+            variant='primary'
           >
             Login
             {isLoading && (
@@ -78,7 +79,7 @@ const Login = () => {
                 <div className="animate-spin rounded-full size-4 border-2 border-t-0 border-white"></div>
               </div>
             )}
-          </button>
+          </Button>
         </form>
       </section>
     </div>
