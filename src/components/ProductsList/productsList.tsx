@@ -1,33 +1,36 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useProducts from "../../hooks/useProducts";
 import Button from '../Button/button';
+import Loading from '../Loading/loading';
 import ProductItem from "../ProductItem/productItem";
 
 const ProductsList = () => {
-  const { products, isLoading } = useProducts();
+  const { products, isLoading, ProductActions } = useProducts();
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (products.length === 0)
+      ProductActions.fetchAll()
+  }, [products.length])
+
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center mt-32'>
+        <Loading size='medium' />
+      </div>
+    )
+  }
   return (
     <div>
-      <h1>Products</h1>
-      
-        {/* <div className='flex gap-4 items-center mb-6 w-full'>
-          <select
-            value={gridOrList}
-            onChange={(e) => setGridOrList(e.target.value as 'list' | 'grid')}
-            className='rounded-lg px-4 py-2 text-sm font-bold bg-gray-900 ml-auto focus:outline-none'
-          >
-            <option  value='list'>List</option>
-            <option  value='grid'>Grid</option>
-          </select>
-        </div> */}
-      {isLoading && (
-        <div className='flex justify-center items-center'>
-          <div className='animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-800'></div>
+      <div className='flex justify-between items-center mb-6'>
+        <h1 className='text-2xl font-bold mb-6'>Products</h1>
+        <div className='flex gap-4 items-center'>
+          <Button onClick={ProductActions.fetchAll} variant='secondary'>Refresh</Button>
+          <Button onClick={() => navigate('/product/create')} variant='primary'>Create Product</Button>
         </div>
-      )}
-
+      </div>
       {
         products.length > 0 ? (
           <div
