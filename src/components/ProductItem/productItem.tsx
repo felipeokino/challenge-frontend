@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Product } from "../../types/product.types";
 
 type ProductItemProps = {
@@ -6,9 +6,13 @@ type ProductItemProps = {
 };
 const ProductItem = ({ product }: ProductItemProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const handleClick = () => {
-    navigate(`/product/${product.id}`);
+    if (!location.pathname.includes('logs')) {
+      navigate(`/product/${product.id}`);
+    }
   };
+
   return (
     <>
       <div
