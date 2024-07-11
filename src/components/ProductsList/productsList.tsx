@@ -33,7 +33,6 @@ const ProductsList = () => {
           </div>
         )
       }
-      
     </div>
   );
 };
