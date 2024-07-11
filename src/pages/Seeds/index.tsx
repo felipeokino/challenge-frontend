@@ -1,10 +1,11 @@
 import { Settings, Trash } from 'lucide-react';
 import Button from '../../components/Button/button';
+import Loading from '../../components/Loading/loading';
 import ProgressBar from '../../components/ProgressBar/progressBar';
 import useSeeds from '../../hooks/useSeeds';
 
 const Seeds = () => {
-  const { populateSeeds, deleteSeeds, progress } = useSeeds();
+  const { populateSeeds, deleteSeeds, progress, isLoading } = useSeeds();
   const handleClickClear = async () => {
     await deleteSeeds()
   }
@@ -23,6 +24,11 @@ const Seeds = () => {
         <Button onClick={handleClickStart}>Run Seed <Settings /></Button>
         <Button variant='danger' onClick={handleClickClear}>Clear all Seeds <Trash /></Button>
       </div>
+      {isLoading && (
+        <div className='flex justify-center items-center mt-32'>
+          <Loading size='medium' />
+        </div>
+      )}
       {!!progress && <ProgressBar progress={progress} />}
     </div>
   )

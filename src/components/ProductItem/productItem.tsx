@@ -7,6 +7,7 @@ type ProductItemProps = {
 const ProductItem = ({ product }: ProductItemProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  
   const handleClick = () => {
     if (!location.pathname.includes('logs')) {
       navigate(`/product/${product.id}`);

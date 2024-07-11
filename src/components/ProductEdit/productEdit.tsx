@@ -22,12 +22,17 @@ const ProductEdit = () => {
     price: false,
   });
 
-  const { ProductActions, error, isLoading, product } = useProducts();
+  const { ProductActions, error, isLoading, product, submmitLoading } = useProducts();
 
   const formRef = useRef<EditProductForm>(null);
 
   const loadFormData = () => {
     if (product) {
+
+      if (product.deletedAt) {
+        return navigate('/logs');
+      }
+
       const { name, description, price } = product;
       if (formRef.current) {
         formRef.current.name.value = name;
@@ -79,7 +84,7 @@ const ProductEdit = () => {
 
   if (!id) return <Navigate to="/" />;
 
-  console.log(errors);
+
 
   return (
     <div>
@@ -120,7 +125,7 @@ const ProductEdit = () => {
           </Button>
           <Button type="submit">
             Save
-            {!isLoading && <Loading size="tiny" />}
+            {submmitLoading && <Loading size="tiny" />}
           </Button>
         </div>
       </form>

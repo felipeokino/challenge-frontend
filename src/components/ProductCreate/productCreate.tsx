@@ -20,7 +20,7 @@ const ProductCreate = () => {
     price: false,
   });
 
-  const { ProductActions, error, isLoading } = useProducts()
+  const { ProductActions, error, isLoading, submmitLoading } = useProducts()
 
   const handleSubmit = async (e: React.FormEvent<CreateProductForm>) => {
     e.preventDefault();
@@ -91,7 +91,7 @@ const ProductCreate = () => {
           </Button>
           <Button type="submit">
             Create
-            {isLoading && <Loading size="tiny" />}
+            {submmitLoading && <Loading size="tiny" />}
           </Button>
         </div>
       </form>

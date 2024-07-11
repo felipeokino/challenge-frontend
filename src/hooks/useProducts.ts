@@ -8,11 +8,13 @@ type ProductStore = {
   products: Product[]
   product: Product | null
   isLoading: boolean
+  submmitLoading: boolean
   error: string | null
   setProducts: (products: Product[]) => void
   setProduct: (product: Product | null) => void
   setIsLoading: (isLoading: boolean) => void
   setError: (error: string | null) => void
+  setSubmitLoading: (isLoading: boolean) => void
 }
 
 const useStore = create<ProductStore>((set) => ({
@@ -20,14 +22,16 @@ const useStore = create<ProductStore>((set) => ({
   product: null,
   isLoading: false,
   error: null,
+  submmitLoading: false,
   setProducts: (products) => set({ products }),
   setProduct: (product) => set({ product }),
   setIsLoading: (isLoading) => set({ isLoading }),
   setError: (error) => set({ error }),
+  setSubmitLoading: (isLoading) => set({ submmitLoading: isLoading }),
 }));
 
 const useProducts = () => {
-  const { setProducts, setProduct, setIsLoading, setError, isLoading, error, products, product } = useStore((state) => state);
+  const { setProducts, setProduct, setIsLoading, setError, isLoading, error, products, product, submmitLoading, setSubmitLoading} = useStore((state) => state);
   const [ loadProducts, setLoadProducts ] = useState(false);
   const [ filter, setFilter ] = useState('');
 
@@ -72,7 +76,7 @@ const useProducts = () => {
   }
 
   const deleteProduct = async (id: string) => {
-    setIsLoading(true)
+    setSubmitLoading(true)
     try {
       await api.delete(`/products/${id}`, {
         headers: {
@@ -83,12 +87,12 @@ const useProducts = () => {
     } catch (error) {
       console.log(error)
     } finally {
-      setIsLoading(false)
+      setSubmitLoading(false)
     }
   }
 
   const createProduct = async (product: Omit<Product, 'id'>) => {
-    setIsLoading(true)
+    setSubmitLoading(true)
     try {
       await api.post(`/products`, product, {
         headers: {
@@ -100,12 +104,12 @@ const useProducts = () => {
       setError(error.response.data.message)
       console.log(error)
     } finally {
-      setIsLoading(false)
+      setSubmitLoading(false)
     }
   }
 
   const editProduct = async (product: Product) => {
-    setIsLoading(true)
+    setSubmitLoading(true)
     try {
       await api.put(`/products/${product.id}`, product, {
         headers: {
@@ -117,7 +121,7 @@ const useProducts = () => {
       setError(error.response.data.message)
       console.log(error)
     } finally {
-      setIsLoading(false)
+      setSubmitLoading(false)
     }
   }
 
@@ -144,7 +148,8 @@ const useProducts = () => {
     product,
     isLoading,
     error,
-    ProductActions
+    ProductActions,
+    submmitLoading
   }
 }
 

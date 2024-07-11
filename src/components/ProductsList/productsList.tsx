@@ -5,7 +5,7 @@ import ProductItem from "../ProductItem/productItem";
 
 
 const ProductsList = () => {
-  const { products, isLoading, ProductActions } = useProducts();
+  const { products, isLoading } = useProducts();
 
   if (isLoading) {
     return (

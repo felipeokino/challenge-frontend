@@ -8,7 +8,6 @@ const ProductDetail = () => {
   const { id } = useParams();
   const { isLoading, product, ProductActions, error } = useProducts();
   const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
@@ -54,6 +53,18 @@ const ProductDetail = () => {
       </div>
     );
   }
+
+  if (product?.deletedAt) {
+    return (
+      <div className="text-white text-2xl flex flex-col justify-center items-center gap-6 w-full mt-28">
+        <h1 className="text-2xl font-bold">Product Deleted</h1>
+        <Button onClick={handleGoBack} variant="secondary">
+          Back
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div>
       {product && (
@@ -72,7 +83,7 @@ const ProductDetail = () => {
         <Button onClick={handleGoBack} variant="ghost">
           Back
         </Button>
-        <Button onClick={handleEdit}>Edit</Button>
+        {!product?.deletedAt && <Button onClick={handleEdit}>Edit</Button>}
         <Button variant="danger" onClick={handleDelete}>
           Delete
         </Button>

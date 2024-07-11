@@ -5,8 +5,10 @@ import api from '../utils/api';
 const useSeeds = () => {
   const [cookies] = useCookies(['user']);
   const [progress, setProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const deleteSeeds = async () => {
+    setIsLoading(true)
     try {
       await api.delete('/seeds', {
         headers: {
@@ -17,10 +19,11 @@ const useSeeds = () => {
           const progress = progressEvent.event.currentTarget.response
           setProgress(progress.match(/.*(\s\d+)/)?.[1].trim() || '0')
         },
-        
       })
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -39,7 +42,8 @@ const useSeeds = () => {
   return {
     populateSeeds,
     deleteSeeds,
-    progress
+    progress,
+    isLoading
   };
 }
 
