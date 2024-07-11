@@ -4504,7 +4504,6 @@ __metadata:
     "@types/react-dom": ^18.3.0
     autoprefixer: ^10.4.19
     axios: ^1.7.2
-    lucide-react: ^0.407.0
     postcss: ^8.4.39
     react: ^18.3.1
     react-cookie: ^7.1.4
@@ -9046,15 +9045,6 @@ __metadata:
   dependencies:
     yallist: ^3.0.2
   checksum: c154ae1cbb0c2206d1501a0e94df349653c92c8cbb25236d7e85190bcaf4567a03ac6eb43166fabfa36fd35623694da7233e88d9601fbf411a9a481d85dbd2cb
-  languageName: node
-  linkType: hard
-
-"lucide-react@npm:^0.407.0":
-  version: 0.407.0
-  resolution: "lucide-react@npm:0.407.0"
-  peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: f872d76a4de935bcf3097c60f2823c2d6e69d7bbaaa7a3fd7b352d77826489205d39e27d377762ac9e8642e04fdf01ad41831fce3ee70cbb0b73cb6235e7e0b1
   languageName: node
   linkType: hard
 

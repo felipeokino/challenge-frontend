@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import { tv } from 'tailwind-variants';
 
 type ButtonProps = ComponentProps<'button'> & {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'warning' | 'icon'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'warning'
 }
 
 const buttonVariants = tv({
@@ -15,7 +15,6 @@ const buttonVariants = tv({
       danger: 'bg-rose-600 hover:bg-red-700 focus:ring-red-500 font-semibold text-white',
       success: 'bg-green-500 hover:bg-green-700 hover:text-white focus:ring-green-500 font-semibold text-black',
       warning: 'bg-yellow-500 hover:bg-yellow-700 focus:ring-yellow-500',
-      icon: 'bg-transparent hover:bg-transparent focus:ring-gray-500 w-fit min-w-[0px] p-0',
     }
   },
   defaultVariants: {
