@@ -7,6 +7,7 @@ import ProductDetail from './components/ProductDetail/productDetail';
 import ProductEdit from './components/ProductEdit/productEdit';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Logs from './pages/Logs';
 import Seeds from './pages/Seeds';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail  />} />
         <Route path="/product/:id/edit" element={<ProductEdit  />} />
         <Route path="/product/create" element={<ProductCreate  />} />
+        <Route path="/logs" element={<Logs  />} />
         <Route path="seeds" element={<Seeds  />} />
       </Route>
       <Route path="/login" element={<Login />} />

@@ -16,6 +16,9 @@ const Layout = () => {
             <li>
               <a href="/seeds">Seeds</a>
             </li>
+            <li>
+              <a href="/logs">Logs</a>
+            </li>
           </ul>
         </nav>
         <button onClick={logout}>Sign Out</button>

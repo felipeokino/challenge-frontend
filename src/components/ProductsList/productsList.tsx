@@ -1,19 +1,10 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useProducts from "../../hooks/useProducts";
-import Button from '../Button/button';
 import Loading from '../Loading/loading';
 import ProductItem from "../ProductItem/productItem";
 
+
 const ProductsList = () => {
   const { products, isLoading, ProductActions } = useProducts();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (products.length === 0)
-      ProductActions.fetchAll()
-  }, [products.length])
 
   if (isLoading) {
     return (
@@ -24,13 +15,7 @@ const ProductsList = () => {
   }
   return (
     <div>
-      <div className='flex justify-between items-center mb-6 max-sm:flex-col'>
-        <h1 className='text-2xl font-bold mb-6'>Products</h1>
-        <div className='flex gap-4 items-center max-sm:flex-col max-sm:w-full '>
-          <Button onClick={ProductActions.fetchAll} variant='secondary'>Refresh</Button>
-          <Button onClick={() => navigate('/product/create')} variant='primary'>Create Product</Button>
-        </div>
-      </div>
+      
       {
         products.length > 0 ? (
           <div
