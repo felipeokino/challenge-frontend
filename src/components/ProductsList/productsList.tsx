@@ -24,9 +24,9 @@ const ProductsList = () => {
   }
   return (
     <div>
-      <div className='flex justify-between items-center mb-6'>
+      <div className='flex justify-between items-center mb-6 max-sm:flex-col'>
         <h1 className='text-2xl font-bold mb-6'>Products</h1>
-        <div className='flex gap-4 items-center'>
+        <div className='flex gap-4 items-center max-sm:flex-col max-sm:w-full '>
           <Button onClick={ProductActions.fetchAll} variant='secondary'>Refresh</Button>
           <Button onClick={() => navigate('/product/create')} variant='primary'>Create Product</Button>
         </div>
@@ -43,7 +43,6 @@ const ProductsList = () => {
         </div>) : (
           <div className='flex flex-col justify-center items-center gap-8'>
             <h1 className='text-2xl font-bold'>No Products Found</h1>
-            <Button onClick={() => navigate('/product/create')} variant='primary'>Create Product</Button>
           </div>
         )
       }
