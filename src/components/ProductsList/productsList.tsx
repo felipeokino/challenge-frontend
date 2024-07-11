@@ -1,4 +1,3 @@
-import { CircleX } from 'lucide-react';
 import useProducts from "../../hooks/useProducts";
 import Loading from '../Loading/loading';
 import ProductItem from "../ProductItem/productItem";
@@ -27,9 +26,8 @@ const ProductsList = () => {
             <ProductItem key={index} product={product} />
           ))}
         </div>) : (
-          <div className='flex flex-col justify-center items-center mt-32 gap-2'>
+          <div className='flex flex-col justify-center items-center gap-8'>
             <h1 className='text-2xl font-bold'>No Products Found</h1>
-            <CircleX size={52} />
           </div>
         )
       }

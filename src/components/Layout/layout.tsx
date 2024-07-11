@@ -1,7 +1,5 @@
-import { History, Home, LogOut, Settings } from "lucide-react";
 import { Outlet } from "react-router-dom";
 import useAuthentication from "../../hooks/useAuthentication";
-import Button from "../Button/button";
 
 const Layout = () => {
   const { logout } = useAuthentication();
@@ -11,30 +9,19 @@ const Layout = () => {
       <header className="flex justify-between items-center w-full h-16 px-4 bg-gray-800 sticky top-0">
         <h1>Products App</h1>
         <nav>
-          <ul className="flex items-center gap-6">
+          <ul className="flex items-center space-x-4">
             <li>
-              <a className="flex justify-center items-center" href="/">
-                <Home />
-                <span className="ml-2">Home</span>
-              </a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a className="flex justify-center items-center" href="/seeds">
-                <Settings />
-                <span className="ml-2">Seeds</span>
-              </a>
+              <a href="/seeds">Seeds</a>
             </li>
             <li>
-              <a className="flex justify-center items-center" href="/logs">
-                <History />
-                <span className="ml-2">Logs</span>
-              </a>
+              <a href="/logs">Logs</a>
             </li>
           </ul>
         </nav>
-        <Button variant="icon" onClick={logout}>
-          <LogOut />
-        </Button>
+        <button onClick={logout}>Sign Out</button>
       </header>
       <main className="flex-1 p-4">
         <Outlet />
