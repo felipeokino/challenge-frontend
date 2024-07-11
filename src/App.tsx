@@ -1,7 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/layout';
 import PrivateRoute from './components/Layout/privateRoute';
+import ProductCreate from './components/ProductCreate/productCreate';
 import ProductDetail from './components/ProductDetail/productDetail';
+import ProductEdit from './components/ProductEdit/productEdit';
 import Home from './pages/Home';
 import Login from './pages/Login';
 
@@ -11,8 +13,8 @@ function App() {
       <Route path="/" element={<PrivateRoute><Layout  /></PrivateRoute>}>
         <Route index element={<Home  />} />
         <Route path="/product/:id" element={<ProductDetail  />} />
-        <Route path="/product/:id/edit" element={<h1>edit</h1>} />
-        <Route path="/product/create" element={<h1>Create</h1>} />
+        <Route path="/product/:id/edit" element={<ProductEdit  />} />
+        <Route path="/product/create" element={<ProductCreate  />} />
         <Route path="contact" element={<h1>Contact</h1>} />
       </Route>
       <Route path="/login" element={<Login />} />

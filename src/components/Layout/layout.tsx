@@ -6,7 +6,7 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col min-h-screen w-screen bg-gray-700 text-white">
-      <header className="flex justify-between items-center w-full h-16 px-4 bg-gray-800">
+      <header className="flex justify-between items-center w-full h-16 px-4 bg-gray-800 sticky top-0">
         <h1>My App</h1>
         <nav>
           <ul className="flex items-center space-x-4">

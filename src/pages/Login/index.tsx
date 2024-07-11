@@ -5,7 +5,8 @@ import useAuthentication from "../../hooks/useAuthentication";
 import { validateEmail } from "../../utils/string";
 
 interface LoginForm extends HTMLFormElement {
-  someValue: HTMLInputElement;
+  email: HTMLInputElement;
+  password: HTMLInputElement;
 }
 const Login = () => {
   const [errors, setErrors] = useState<Record<"email" | "password", boolean>>({

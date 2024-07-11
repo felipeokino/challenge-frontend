@@ -6,7 +6,7 @@ type ButtonProps = ComponentProps<'button'> & {
 }
 
 const buttonVariants = tv({
-  base: 'bg-gray-900 text-white min-w-[100px] px-4 py-2 text-base rounded-lg text-center cursor-pointer',
+  base: 'bg-gray-900 text-white min-w-[120px] px-4 py-2 text-base rounded-lg text-center cursor-pointer flex gap-4 items-center justify-center transition-all',
   variants: {
     variant: {
       primary: 'bg-blue-500 hover:bg-blue-700 focus:ring-blue-500',

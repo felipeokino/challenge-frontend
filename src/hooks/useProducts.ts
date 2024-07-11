@@ -1,15 +1,36 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { create } from 'zustand';
 import { Product, ProductResponse } from '../types/product.types';
 import api from '../utils/api';
 
+type ProductStore = {
+  products: Product[]
+  product: Product | null
+  isLoading: boolean
+  error: string | null
+  setProducts: (products: Product[]) => void
+  setProduct: (product: Product | null) => void
+  setIsLoading: (isLoading: boolean) => void
+  setError: (error: string | null) => void
+}
+
+const useStore = create<ProductStore>((set) => ({
+  products: [],
+  product: null,
+  isLoading: false,
+  error: null,
+  setProducts: (products) => set({ products }),
+  setProduct: (product) => set({ product }),
+  setIsLoading: (isLoading) => set({ isLoading }),
+  setError: (error) => set({ error }),
+}));
 
 const useProducts = () => {
-  const [products, setProducts] = React.useState<Product[]>([])
-  const [product, setProduct] = React.useState<Product | null>(null)
+  const { setProducts, setProduct, setIsLoading, setError, isLoading, error, products, product } = useStore((state) => state);
+  const [ loadProducts, setLoadProducts ] = useState(false);
+
   const [cookies] = useCookies(['user']);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
 
   const fetchProducts = async () => {
     setIsLoading(true)
@@ -19,11 +40,11 @@ const useProducts = () => {
           'Authorization': `Bearer ${cookies.user}`
         }
       })
-      console.log(data)
-      // setProducts(data.products)
+      setProducts(data.products)
     } catch (error) {
       console.log(error)
     } finally {
+      setLoadProducts(false)
       setIsLoading(false)
     }
   }
@@ -61,15 +82,52 @@ const useProducts = () => {
     }
   }
 
-  useEffect(() => {
-    (async () => await fetchProducts())()
-  }, [])
+  const createProduct = async (product: Omit<Product, 'id'>) => {
+    setIsLoading(true)
+    try {
+      await api.post(`/products`, product, {
+        headers: {
+          'Authorization': `Bearer ${cookies.user}`
+        }
+      })
+      fetchProducts()
+    } catch (error: any) {
+      setError(error.response.data.message)
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const editProduct = async (product: Product) => {
+    setIsLoading(true)
+    try {
+      await api.put(`/products/${product.id}`, product, {
+        headers: {
+          'Authorization': `Bearer ${cookies.user}`
+        }
+      })
+      fetchProducts()
+    } catch (error: any) {
+      setError(error.response.data.message)
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => { 
+    if (loadProducts) {
+      (async () => await fetchProducts())()
+    }
+  }, [loadProducts])
 
   const ProductActions = {
-    edit: () => {},
+    edit: editProduct,
     delete: deleteProduct,
     getDetails: fetchProductById,
-    create: () => {}
+    create: createProduct,
+    fetchAll: () => setLoadProducts(true)
   }
   return {
     products,
