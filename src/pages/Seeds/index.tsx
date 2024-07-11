@@ -1,3 +1,4 @@
+import { Settings, Trash } from 'lucide-react';
 import Button from '../../components/Button/button';
 import ProgressBar from '../../components/ProgressBar/progressBar';
 import useSeeds from '../../hooks/useSeeds';
@@ -19,8 +20,8 @@ const Seeds = () => {
         - Clear all seeds will delete all the products created.
       </span>
       <div className='mt-6 flex gap-4'>
-        <Button onClick={handleClickStart}>Run Seed</Button>
-        <Button variant='danger' onClick={handleClickClear}>Clear all Seeds</Button>
+        <Button onClick={handleClickStart}>Run Seed <Settings /></Button>
+        <Button variant='danger' onClick={handleClickClear}>Clear all Seeds <Trash /></Button>
       </div>
       {!!progress && <ProgressBar progress={progress} />}
     </div>
