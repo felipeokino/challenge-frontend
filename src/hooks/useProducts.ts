@@ -29,16 +29,21 @@ const useStore = create<ProductStore>((set) => ({
 const useProducts = () => {
   const { setProducts, setProduct, setIsLoading, setError, isLoading, error, products, product } = useStore((state) => state);
   const [ loadProducts, setLoadProducts ] = useState(false);
+  const [ filter, setFilter ] = useState('');
 
   const [cookies] = useCookies(['user']);
 
   const fetchProducts = async () => {
     setIsLoading(true)
     try {
+      const params = {
+        [filter]: filter ? true : ''
+      }
       const { data } = await api.get<ProductResponse>(`/products`, {
         headers: {
           'Authorization': `Bearer ${cookies.user}`
-        }
+        },
+        params
       })
       setProducts(data.products)
     } catch (error) {
@@ -116,6 +121,11 @@ const useProducts = () => {
     }
   }
 
+  const handleFetchAll = (filter?: string) => {
+    setLoadProducts(true)
+    setFilter(filter || '')
+  }
+
   useEffect(() => { 
     if (loadProducts) {
       (async () => await fetchProducts())()
@@ -127,7 +137,7 @@ const useProducts = () => {
     delete: deleteProduct,
     getDetails: fetchProductById,
     create: createProduct,
-    fetchAll: () => setLoadProducts(true)
+    fetchAll: handleFetchAll
   }
   return {
     products,
