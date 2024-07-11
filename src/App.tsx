@@ -1,14 +1,18 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/layout';
 import PrivateRoute from './components/Layout/privateRoute';
+import ProductDetail from './components/ProductDetail/productDetail';
+import Home from './pages/Home';
 import Login from './pages/Login';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<PrivateRoute><Layout  /></PrivateRoute>}>
-        <Route index element={<h1>Home</h1>} />
-        <Route path="about" element={<h1>About</h1>} />
+        <Route index element={<Home  />} />
+        <Route path="/product/:id" element={<ProductDetail  />} />
+        <Route path="/product/:id/edit" element={<h1>edit</h1>} />
+        <Route path="/product/create" element={<h1>Create</h1>} />
         <Route path="contact" element={<h1>Contact</h1>} />
       </Route>
       <Route path="/login" element={<Login />} />
