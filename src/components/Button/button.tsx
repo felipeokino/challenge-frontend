@@ -6,14 +6,14 @@ type ButtonProps = ComponentProps<'button'> & {
 }
 
 const buttonVariants = tv({
-  base: 'bg-gray-900 text-white min-w-[120px] px-4 py-2 text-base rounded-lg text-center cursor-pointer flex gap-4 items-center justify-center transition-all',
+  base: 'bg-gray-900 text-white min-w-[120px] px-4 py-2 text-lg rounded-lg text-center cursor-pointer flex gap-4 items-center justify-center transition-all max-sm:w-full',
   variants: {
     variant: {
-      primary: 'bg-blue-500 hover:bg-blue-700 focus:ring-blue-500',
+      primary: 'bg-sky-500 hover:bg-sky-700 focus:ring-sky-500 font-semibold text-black hover:text-white',
       secondary: 'bg-gray-500 hover:bg-gray-700 focus:ring-gray-500',
       ghost: 'bg-transparent hover:bg-transparent focus:ring-gray-500',
-      danger: 'bg-red-500 hover:bg-red-700 focus:ring-red-500',
-      success: 'bg-green-500 hover:bg-green-700 focus:ring-green-500',
+      danger: 'bg-rose-600 hover:bg-red-700 focus:ring-red-500 font-semibold text-white',
+      success: 'bg-green-500 hover:bg-green-700 hover:text-white focus:ring-green-500 font-semibold text-black',
       warning: 'bg-yellow-500 hover:bg-yellow-700 focus:ring-yellow-500',
     }
   },
@@ -23,7 +23,8 @@ const buttonVariants = tv({
 })
 const Button = ({ variant, children, ...props }: ButtonProps) => {
   return (
-    <button {...props} className={buttonVariants({ variant })}>{children}</button>
+    <button {...props} className={buttonVariants({ variant })}>{children}
+    </button>
   )
 }
 
