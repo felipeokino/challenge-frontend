@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import useProducts from "../../hooks/useProducts";
-import Button from "../Button/button";
-import Loading from "../Loading/loading";
+
+import Button from "components/Button";
+import Loading from "components/Loading";
+import useProducts from "hooks/useProducts";
+import { formatPrice } from "utils/number";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -76,7 +79,7 @@ const ProductDetail = () => {
             </div>
           </div>
           <p className="text-lg">{product.description}</p>
-          <p className="text-2xl text-end">${product.price}</p>
+          <p className="text-2xl text-end">{formatPrice(product.price)}</p>
         </div>
       )}
       <footer className="flex justify-center items-center mt-10 gap-4 max-sm:flex-col md:justify-end">

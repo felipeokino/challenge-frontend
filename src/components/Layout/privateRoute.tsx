@@ -1,6 +1,6 @@
+import useAuthentication from "hooks/useAuthentication";
 import { ComponentProps } from "react";
 import { Navigate } from "react-router-dom";
-import useAuthentication from "../../hooks/useAuthentication";
 
 type PrivateRouteProps = ComponentProps<"div">;
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
