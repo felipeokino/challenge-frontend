@@ -8,18 +8,18 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        bounce: {
-          "0%, 20%, 50%, 80%, 100%": {
-            transform: "translateY(0)",
-            offset: "0.4",
+        shake: {
+          "0%, 100%": {
+            transform: "translateX(0)",
+            offset: 0.5,
           },
           "40%": {
-            transform: "translateY(-10px)",
-            offset: "0.6",
+            transform: "translateX(-5px)",
+            offset: 0.5,
           },
-          "60%": {
-            transform: "translateY(-5px)",
-            offset: "0.8",
+          "75%": {
+            transform: "translateX(5px)",
+            offset: 0.5,
           },
         },
         bounce2: {
@@ -39,6 +39,7 @@ module.exports = {
       },
       animation: {
         'bounce': 'bounce2 1.5s ease-in-out infinite',
+        'shake': 'shake .3s ease',
       },
     },
   },

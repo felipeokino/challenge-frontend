@@ -1,15 +1,15 @@
+import Button from "components/Button";
+import useAuthentication from "hooks/useAuthentication";
 import { History, Home, LogOut, Settings } from "lucide-react";
 import { Outlet } from "react-router-dom";
-import useAuthentication from "../../hooks/useAuthentication";
-import Button from "../Button/button";
 
 const Layout = () => {
   const { logout } = useAuthentication();
 
   return (
-    <div className="flex flex-col min-h-screen w-screen bg-gray-700 text-white">
-      <header className="flex justify-between items-center w-full h-16 px-4 bg-gray-800 sticky top-0">
-        <h1>Products App</h1>
+    <div className="flex flex-col min-h-screen w-screen bg-gray-700 text-white ">
+      <header className="flex justify-between items-center w-full h-16 px-4 bg-gray-800 sticky top-0 z-10">
+        <h1 className="max-sm:hidden">Products App</h1>
         <nav>
           <ul className="flex items-center gap-6">
             <li>

@@ -4,9 +4,9 @@ export type Product = {
   description: string;
   price: number;
   deletedAt?: string;
-}
+};
 
 export type ProductResponse = {
   products: Product[];
   total: number;
-}
+};

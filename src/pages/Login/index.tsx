@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from '../../components/Button/button';
-import Input from "../../components/Input/input";
-import useAuthentication from "../../hooks/useAuthentication";
-import { validateEmail } from "../../utils/string";
+
+import Button from "components/Button";
+import Input from "components/Input";
+import useAuthentication from "hooks/useAuthentication";
+import { validateEmail } from "utils/string";
 
 interface LoginForm extends HTMLFormElement {
   email: HTMLInputElement;
@@ -25,10 +26,8 @@ const Login = () => {
 
     if (validateEmail(email) && password) {
       await login(email, password).then(() => {
-          if (!error) 
-            navigate("/")
-      }
-    );
+        if (!error) navigate("/");
+      });
     } else {
       setErrors({
         email: !validateEmail(email),
@@ -37,7 +36,7 @@ const Login = () => {
       return;
     }
   };
-  
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-zinc-700 gap-8">
       <section className=" w-1/3 bg-zinc-800 rounded-lg p-8 shadow-xl max-lg:w-2/3 max-sm:w-11/12 ">
@@ -69,10 +68,7 @@ const Login = () => {
             error={errors.password}
             helperText="At least 8 characters"
           />
-          <Button
-            type="submit"
-            variant='primary'
-          >
+          <Button type="submit" variant="primary">
             Login
             {isLoading && (
               <div className="flex justify-center items-center">

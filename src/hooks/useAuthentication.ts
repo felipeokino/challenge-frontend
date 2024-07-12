@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { User, UserResponse } from "../types/user.types";
-import api from "../utils/api";
+import { User, UserResponse } from "types/user.types";
+
+import api from "utils/api";
 
 const useAuthentication = () => {
   const [user, setUser] = useState<User | null>(null);
