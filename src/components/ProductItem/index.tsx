@@ -1,4 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import useCustomNavigate from "hooks/useCustomNavigate";
+import { useLocation } from "react-router-dom";
 
 import { Product } from "types/product.types";
 import { formatPrice } from "utils/number";
@@ -7,7 +8,7 @@ type ProductItemProps = {
   product: Product;
 };
 const ProductItem = ({ product }: ProductItemProps) => {
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const location = useLocation();
 
   const handleClick = () => {

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react";
 
 import Button from "components/Button";
 import Input from "components/Input";
 import useAuthentication from "hooks/useAuthentication";
+import useCustomNavigate from "hooks/useCustomNavigate";
 import { validateEmail } from "utils/string";
 
 interface LoginForm extends HTMLFormElement {
@@ -16,25 +16,28 @@ const Login = () => {
     password: false,
   });
 
-  const navigate = useNavigate();
+  const { goHome } = useCustomNavigate();
   const { login, isLoading, error } = useAuthentication();
 
-  const handleSubmit = async (e: React.FormEvent<LoginForm>) => {
+  const handleSubmit = async (e: FormEvent<LoginForm>) => {
     e.preventDefault();
     const email = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
 
     if (validateEmail(email) && password) {
-      await login(email, password).then(() => {
-        if (!error) navigate("/");
-      });
-    } else {
-      setErrors({
-        email: !validateEmail(email),
-        password: !password,
-      });
-      return;
+      await login(email, password)
+        .then(() => {
+          goHome();
+        })
+        .catch(() => {
+          console.error("Error on login");
+        });
     }
+    setErrors({
+      email: !validateEmail(email),
+      password: !password,
+    });
+    return;
   };
 
   return (
@@ -43,7 +46,7 @@ const Login = () => {
         <p className="text-white font-semibold text-xl block w-full text-center">
           Login to your account
         </p>
-        {error && (
+        {Boolean(error) && (
           <div className="flex justify-center items-center">
             <p className="text-red-500 text-center">{error}</p>
           </div>
@@ -66,7 +69,7 @@ const Login = () => {
             titleClassName="text-white"
             id="password"
             error={errors.password}
-            helperText="At least 8 characters"
+            helperText="At least 6 characters"
           />
           <Button type="submit" variant="primary">
             Login

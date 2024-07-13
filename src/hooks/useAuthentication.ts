@@ -12,6 +12,7 @@ const useAuthentication = () => {
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
+    setError(null);
     try {
       const { data } = await api.post<UserResponse>("/login", {
         email,
@@ -21,7 +22,8 @@ const useAuthentication = () => {
       setUser(data.user);
       setError(null);
     } catch (error: any) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
+      return Promise.reject(error);
     } finally {
       setIsLoading(false);
     }
@@ -33,7 +35,7 @@ const useAuthentication = () => {
   };
 
   const isLoggedIn = () => {
-    return !!cookies.user;
+    return Boolean(cookies.user);
   };
 
   return { user, login, logout, isLoggedIn, isLoading, error };

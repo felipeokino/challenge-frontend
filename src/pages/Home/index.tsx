@@ -1,13 +1,13 @@
 import Button from "components/Button";
 import ProductsList from "components/ProductsList";
+import useCustomNavigate from "hooks/useCustomNavigate";
 import useProducts from "hooks/useProducts";
 import { Plus, RefreshCcw } from "lucide-react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { products, ProductActions } = useProducts();
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
 
   const handleFetch = () => {
     ProductActions.fetchAll();

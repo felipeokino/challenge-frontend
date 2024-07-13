@@ -34,7 +34,7 @@ const Seeds = () => {
           <Loading size="medium" />
         </div>
       )}
-      {!!progress && <ProgressBar progress={progress} />}
+      {Boolean(progress) && <ProgressBar progress={progress} />}
     </div>
   );
 };

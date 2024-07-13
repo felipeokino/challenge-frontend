@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 import Button from "components/Button";
 import Loading from "components/Loading";
+import useCustomNavigate from "hooks/useCustomNavigate";
 import useProducts from "hooks/useProducts";
 import { formatPrice } from "utils/number";
+import { routes } from "utils/routes";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { isLoading, product, ProductActions, error } = useProducts();
-  const navigate = useNavigate();
+  const { navigate, goBack } = useCustomNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const ProductDetail = () => {
     }
   }, [id]);
 
-  if (!id) return <Navigate to="/" />;
+  if (!id) return <Navigate to={routes.home} />;
 
   if (isLoading)
     return (
@@ -37,20 +39,14 @@ const ProductDetail = () => {
       setIsDeleting(true);
       return;
     }
-    ProductActions.delete(id).then(() => {
-      handleGoBack();
-    });
-  };
-
-  const handleGoBack = () => {
-    navigate("/");
+    ProductActions.delete(id).then(goBack);
   };
 
   if (error) {
     return (
       <div className="text-white text-2xl flex flex-col justify-center items-center gap-6 w-full mt-28">
         {error}
-        <Button onClick={handleGoBack} variant="secondary">
+        <Button onClick={goBack} variant="secondary">
           Back
         </Button>
       </div>
@@ -61,7 +57,7 @@ const ProductDetail = () => {
     return (
       <div className="text-white text-2xl flex flex-col justify-center items-center gap-6 w-full mt-28">
         <h1 className="text-2xl font-bold">Product Deleted</h1>
-        <Button onClick={handleGoBack} variant="secondary">
+        <Button onClick={goBack} variant="secondary">
           Back
         </Button>
       </div>
@@ -83,7 +79,7 @@ const ProductDetail = () => {
         </div>
       )}
       <footer className="flex justify-center items-center mt-10 gap-4 max-sm:flex-col md:justify-end">
-        <Button onClick={handleGoBack} variant="ghost">
+        <Button onClick={goBack} variant="ghost">
           Back
         </Button>
         {!product?.deletedAt && <Button onClick={handleEdit}>Edit</Button>}

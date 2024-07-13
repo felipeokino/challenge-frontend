@@ -2,17 +2,19 @@
 import Button from "components/Button";
 import Input from "components/Input";
 import Loading from "components/Loading";
-import React, { useEffect, useRef } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 
+import useCustomNavigate from "hooks/useCustomNavigate";
 import useProducts from "hooks/useProducts";
 import { ProductForm } from "types/form.types";
 import { formatNumber, onlyNumbers } from "utils/number";
+import { routes } from "utils/routes";
 
 const ProductEdit = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [errors, setErrors] = React.useState<Record<string, boolean | string>>({
+  const { navigate, goBack, goHome } = useCustomNavigate();
+  const [errors, setErrors] = useState<Record<string, boolean | string>>({
     name: false,
     description: false,
     price: false,
@@ -37,7 +39,7 @@ const ProductEdit = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<ProductForm>) => {
+  const handleSubmit = async (e: FormEvent<ProductForm>) => {
     e.preventDefault();
 
     const {
@@ -62,24 +64,20 @@ const ProductEdit = () => {
         description,
         price: parseFloat(price),
       }).then(() => {
-        if (!error) navigate("/");
+        if (!error) goHome();
       });
     }
   };
 
-  const handleCancel = () => {
-    navigate(-1);
-  };
-
   useEffect(() => {
     if (!product && id) {
-      ProductActions.getDetails(id).then(() => {
-        loadFormData();
-      });
-    } else loadFormData();
+      ProductActions.getDetails(id);
+      return;
+    }
+    loadFormData();
   }, [product, id]);
 
-  if (!id) return <Navigate to="/" />;
+  if (!id) return <Navigate to={routes.home} />;
 
   return (
     <div>
@@ -90,14 +88,14 @@ const ProductEdit = () => {
         onSubmit={handleSubmit}
       >
         <Input
-          error={!!errors.name}
+          error={Boolean(errors.name)}
           helperText="Name must be between 3 and 15 characters"
           id="name"
           type="text"
           title="Name"
         />
         <Input
-          error={!!errors.description}
+          error={Boolean(errors.description)}
           helperText="Description must be between 3 and 100 characters"
           id="description"
           type="text"
@@ -105,7 +103,7 @@ const ProductEdit = () => {
         />
         <Input
           prefix="$"
-          error={!!errors.price}
+          error={Boolean(errors.price)}
           helperText={
             typeof errors.price === "string"
               ? errors.price
@@ -121,7 +119,7 @@ const ProductEdit = () => {
           }}
         />
         <div className="w-1/3 [&>button]:w-full ml-auto flex gap-6 mt-6 max-sm:flex-col max-sm:w-full">
-          <Button variant="ghost" onClick={handleCancel}>
+          <Button variant="ghost" onClick={goBack}>
             Cancel
           </Button>
           <Button type="submit">

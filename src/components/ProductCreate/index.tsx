@@ -1,15 +1,16 @@
 import Button from "components/Button";
 import Input from "components/Input";
 import Loading from "components/Loading";
+import useCustomNavigate from "hooks/useCustomNavigate";
 import useProducts from "hooks/useProducts";
-import React, { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useRef, useState } from "react";
+
 import { ProductForm } from "types/form.types";
 import { formatNumber, onlyNumbers } from "utils/number";
 
 const ProductCreate = () => {
-  const navigate = useNavigate();
-  const [errors, setErrors] = React.useState<Record<string, boolean | string>>({
+  const { goHome } = useCustomNavigate();
+  const [errors, setErrors] = useState<Record<string, boolean | string>>({
     name: false,
     description: false,
     price: false,
@@ -18,7 +19,7 @@ const ProductCreate = () => {
   const { ProductActions, error, submmitLoading } = useProducts();
   const formRef = useRef<ProductForm>(null);
 
-  const handleSubmit = async (e: React.FormEvent<ProductForm>) => {
+  const handleSubmit = async (e: FormEvent<ProductForm>) => {
     e.preventDefault();
 
     const {
@@ -41,12 +42,8 @@ const ProductCreate = () => {
       description,
       price: parseFloat(onlyNumbers(price)),
     }).then(() => {
-      if (!error) navigate("/");
+      if (!error) goHome();
     });
-  };
-
-  const handleCancel = () => {
-    navigate(-1);
   };
 
   return (
@@ -58,14 +55,14 @@ const ProductCreate = () => {
         onSubmit={handleSubmit}
       >
         <Input
-          error={!!errors.name}
+          error={Boolean(errors.name)}
           helperText="Name must be between 3 and 15 characters"
           id="name"
           type="text"
           title="Name"
         />
         <Input
-          error={!!errors.description}
+          error={Boolean(errors.description)}
           helperText="Description must be between 3 and 100 characters"
           id="description"
           type="text"
@@ -73,7 +70,7 @@ const ProductCreate = () => {
         />
         <Input
           prefix="$"
-          error={!!errors.price}
+          error={Boolean(errors.price)}
           helperText={
             typeof errors.price === "string"
               ? errors.price
@@ -88,7 +85,7 @@ const ProductCreate = () => {
           }}
         />
         <div className="w-1/3 [&>button]:w-full ml-auto flex gap-6 mt-6 max-sm:flex-col max-sm:w-full">
-          <Button variant="ghost" onClick={handleCancel}>
+          <Button variant="ghost" onClick={goHome}>
             Cancel
           </Button>
           <Button type="submit">
